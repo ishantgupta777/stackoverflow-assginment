@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   margin: 32px;
+  color: white !important;
 }
 
 h1{
@@ -12,10 +13,16 @@ h1{
 }
 
 .questions-table {
-  max-width: 60vw !important;
+  max-width: 80vw !important;
   margin: 16px auto;
   border-radius: 10px;
   overflow: hidden;
-  height: 80vh;
+  height: 90vh;
   overflow: auto;
+  color: white;
+}
+
+.questions-table,table,th,td,tr{
+  background-color: #000 !important;
+  color: white !important;
 }

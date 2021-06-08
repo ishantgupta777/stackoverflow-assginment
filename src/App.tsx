@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios'
 import { API_BASE_URL, ORDER, PAGE_SIZE, SORT_BY } from './constants';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import shortid from 'shortid';
 import 'antd/dist/antd.css';
 
 import { Typography,Table, Modal, Button, Spin } from 'antd';
@@ -47,6 +48,7 @@ const App: FC = ()=> {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedRecord, setSelectedRow] = useState<Question | null>(null);
 
+
   const closeModal = ()=>{
     setModalVisible(false);
   }
@@ -78,10 +80,6 @@ const App: FC = ()=> {
     }
   }
 
-  useEffect(()=>{
-    getStackOverflowQues()
-  },[])
-
   return (
     <div className="App">
       <Modal
@@ -104,22 +102,24 @@ const App: FC = ()=> {
         >
           {selectedRecord?.body}
         </Modal>
-      <Title>StackOverflow Assignment</Title>
-      <Text>By Ishant</Text>
+      <Title style={{color:'#187DDC'}}>StackOverflow Assignment</Title>
+      <Text style={{color:'#fff'}}>By Ishant</Text>
+      <div style={{marginBottom: 100}}>
       <InfiniteScroll
         dataLength={questions.length}
         next={getStackOverflowQues}
-        scrollThreshold={0.6}
-        hasMore={hasMore}
-        loader={<Spin/>}
+        scrollThreshold={0.8}
+        hasMore={!loading && hasMore}
+        loader={(loading && <Spin/>)}
         endMessage={
           <p style={{ textAlign: 'center' }}>
-            <b>There are no more questions.</b>
+            <b>Scroll to fetch more messages</b>
           </p>
         }
       >
-        <Table className="questions-table" columns={columns} dataSource={questions} pagination={false} onRow={handleRowClick} rowClassName="table-row-class" />
+        <Table rowKey={obj=>shortid.generate()} className="questions-table" columns={columns} dataSource={questions} pagination={false} onRow={handleRowClick} rowClassName="table-row-class" />
       </InfiniteScroll>
+      </div>
     </div>
   );
 }
