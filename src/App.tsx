@@ -85,7 +85,7 @@ const App: FC = ()=> {
       <Modal
           visible={modalVisible}
           title={selectedRecord?.title || 'Title'}
-          onCancel={closeModal}
+          onCancel={closeModal} 
           footer={[
             <Button key="back" onClick={closeModal}>
               Close
@@ -104,10 +104,9 @@ const App: FC = ()=> {
         </Modal>
       <Title style={{color:'#187DDC'}}>StackOverflow Assignment</Title>
       <Text style={{color:'#fff'}}>By Ishant</Text>
-      <div style={{marginBottom: 100}}>
       <InfiniteScroll
         dataLength={questions.length}
-        next={getStackOverflowQues}
+        next={getStackOverflowQues} 
         scrollThreshold={0.8}
         hasMore={!loading && hasMore}
         loader={(loading && <Spin/>)}
@@ -119,7 +118,6 @@ const App: FC = ()=> {
       >
         <Table rowKey={obj=>shortid.generate()} className="questions-table" columns={columns} dataSource={questions} pagination={false} onRow={handleRowClick} rowClassName="table-row-class" />
       </InfiniteScroll>
-      </div>
     </div>
   );
 }
