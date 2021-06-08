@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import axios from 'axios'
 import shortid from 'shortid';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -40,6 +40,7 @@ const columns = [
   }
 ];
 
+let initialLoad = true;
 const App: FC = ()=> {
   const [loading,setLoading] = useState(false);
   const [questions,setQuestions] = useState<Question[]>([]);
@@ -70,12 +71,18 @@ const App: FC = ()=> {
   const handleRowClick = (record:Question) => {
     return {
       onClick: ()=>{
-        console.log(record)
         setSelectedRow(record);
         setModalVisible(true);
       }
     }
   }
+
+  useEffect(()=>{
+    if(initialLoad){
+      getStackOverflowQues()
+    }
+    return ()=> {initialLoad = false;}
+  })
 
   return (
     <div className="App">
