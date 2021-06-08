@@ -1,16 +1,15 @@
-import React, {FC, useEffect, useState} from 'react';
-import './App.css';
+import React, {FC, useState} from 'react';
 import axios from 'axios'
-import { API_BASE_URL, ORDER, PAGE_SIZE, SORT_BY } from './constants';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import shortid from 'shortid';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Typography,Table, Modal, Button, Spin } from 'antd';
 import 'antd/dist/antd.css';
 
-import { Typography,Table, Modal, Button, Spin } from 'antd';
+import './App.css';
+import { API_BASE_URL, ORDER, PAGE_SIZE, SORT_BY } from './constants';
 import { Question } from './QuestionInterface';
 
 const { Title, Text } = Typography;
-
 
 let page: number = 0;
 
@@ -59,13 +58,11 @@ const App: FC = ()=> {
       setLoading(true)
       page += 1;
       const response = await axios.get(`${API_BASE_URL}/questions?page=${page}&pagesize=${PAGE_SIZE}&order=${ORDER}&sort=${SORT_BY}&site=stackoverflow&filter=withBody`)
-      console.log(response.data)
       if(page === 1) setQuestions(response.data.items)
       else setQuestions(prevQues => [...prevQues,...response.data.items]);
       setHasMore(response.data.has_more)
       setLoading(false)
     }catch(err){
-      console.log(err)
       setLoading(false)
     }
   }
